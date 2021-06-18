@@ -3,7 +3,7 @@ import React from "react";
 
 const Login = (props) => {
 
-    const {email, setEmail,password, setPassword, handleLogin, handleSignup, hasAccount, setHasAccount, emailError, passwordError} = props;
+    const {email, setEmail,password, setPassword, handleLogin, handleSignup, hasAccount, setHasAccount, emailError, passwordError, logWithGoogle, logWithGit} = props;
 
     return (
         
@@ -27,8 +27,8 @@ const Login = (props) => {
                     <> 
 
                     <button onClick={handleLogin}>Sign in</button>
-                    <button>Sign in with Github</button>
-                    <button>Sign in with Google</button>
+                    <button  onClick={logWithGit}>Sign in with Github</button>
+                    <button onClick={logWithGoogle}>Sign in with Google</button>
                     <p>Dont't have an account <span onClick={() => setHasAccount(!hasAccount)}>Sign up</span></p>
 
                     </>) : (

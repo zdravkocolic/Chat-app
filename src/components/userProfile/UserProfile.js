@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./userProfile.css";
+import firebase from "firebase";
 
 export default class UserProfile extends Component {
   toggleInfo = (e) => {

@@ -1,4 +1,4 @@
-import React from "react";
+
 import './App.css';
 import ChatBody from "./components/chatBody/ChatBody";
 import Nav from "./components/nav/Nav";
@@ -7,21 +7,13 @@ import fire from "./fire";
 import Login from "./Login";
 import Hero from "./Hero";
 import './App.css';
-import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
+import firebase from 'firebase';
+
 
 
 
 const App = () => {
-/* uiConfig = {
-  signInFlow: "popup",
-  signInOptions: [
-    fire.auth.GoogleAuthProvider.PROVIDER_ID,
-    fire.auth.GithubAuthProvider.PROVIDER_ID
-  ],
-  callbacks: {
-    signInSuccess: () => false
-  }
-} */
+
 
   const [user, setUser] = useState('');
   const [email, setEmail] = useState ('');
@@ -77,6 +69,56 @@ const handleSignup = () =>{
       });
 };
 
+const logWithGoogle = () => {
+  var provider = new firebase.auth.GoogleAuthProvider();
+  firebase.auth()
+  .signInWithPopup(provider)
+  .then((result) => {
+    /** @type {firebase.auth.OAuthCredential} */
+    var credential = result.credential;
+
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    var token = credential.accessToken;
+    // The signed-in user info.
+    var user = result.user;
+    // ...
+  }).catch((error) => {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    // The email of the user's account used.
+    var email = error.email;
+    // The firebase.auth.AuthCredential type that was used.
+    var credential = error.credential;
+    // ...
+  });
+}
+
+const logWithGit = () => {
+  var provider = new firebase.auth.GithubAuthProvider();
+  firebase.auth()
+  .signInWithPopup(provider)
+  .then((result) => {
+    /** @type {firebase.auth.OAuthCredential} */
+    var credential = result.credential;
+
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    var token = credential.accessToken;
+    // The signed-in user info.
+    var user = result.user;
+    // ...
+  }).catch((error) => {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    // The email of the user's account used.
+    var email = error.email;
+    // The firebase.auth.AuthCredential type that was used.
+    var credential = error.credential;
+    // ...
+  });
+}
+
 const handleLogout = () =>{
   fire.auth().signOut();
 };
@@ -103,11 +145,12 @@ useEffect(()=> {
     <div className="App">
       {user ? (
           <>
-            <Nav />
-            <ChatBody />
+           <Hero handleLogout={handleLogout} />
           </>
       ) : (
         <Login email={email} setEmail={setEmail} password={password} setPassword={setPassword} handleLogin={handleLogin} handleSignup={handleSignup} hasAccount={hasAccount} 
+        logWithGoogle={logWithGoogle}
+        logWithGit={logWithGit}
         setHasAccount={setHasAccount}
         emailError={emailError}
         passwordError={passwordError}
